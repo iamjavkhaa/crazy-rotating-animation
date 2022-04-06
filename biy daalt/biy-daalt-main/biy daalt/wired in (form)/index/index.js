@@ -1,6 +1,25 @@
 const phoneLog = document.querySelector('#phone-log');
 const passLog = document.querySelector('#password-log');
 const user = JSON.parse(localStorage.users);
+const passwordLog = document.querySelector('#password-log');
+
+
+
+phoneLog.addEventListener('keyup', (event)=>{
+    if(event.keyCode === 13) {
+        if(phoneLog.value != '') {
+            passwordLog.focus();
+        }
+    }
+});
+
+passwordLog.addEventListener('keyup', (event) => {
+    if(event.keyCode === 13) {
+        if(passwordLog.value != '') {
+            logIn();
+        }
+    }
+});
 
 
 function logIn() {

@@ -3,6 +3,13 @@ const newPostParent = document.querySelector('.main');
 const newPostInput = document.querySelector('#new-post-input');
 
 
+
+newPostInput.addEventListener('keyup', (event)=> {
+    if(event.keyCode === 27) {
+        newPostCanceled();
+    }
+});
+
 if(localStorage.posts != undefined) {
     posts = JSON.parse(localStorage.posts)
 } else  {
@@ -29,13 +36,6 @@ function postSync() {
             circleEllips.className = 'fa-regular fa-trash-can';
             circleEllips.id = 'trashCan';
             whoPosted.appendChild(circleEllips);
-
-
-            let hiddenIdSpan = document.createElement('div');
-            hiddenIdSpan.className = "hiddenIdSpan";
-            hiddenIdSpan.id = el.id;
-            newPost.appendChild(hiddenIdSpan);
-
     
             newPost.appendChild(whoPosted);
             newPost.appendChild(newPostText);
@@ -65,7 +65,7 @@ function addPost() {
         newPostText.id = 'new-post-text';
         newPostText.innerText = newPostInput.value;
 
-        if(localStorage.posts == undefined) {
+        if(localStorage.posts === undefined) {
             localStorage.posts = JSON.stringify([{post: newPostInput.value, id: 0}])
         } else {
             let posts = JSON.parse(localStorage.posts);
@@ -77,14 +77,6 @@ function addPost() {
         circleEllips.className = 'fa-regular fa-trash-can';
         circleEllips.id = 'trashCan';
         whoPosted.appendChild(circleEllips);
-
-
-        let hiddenIdSpan = document.createElement('div');
-        hiddenIdSpan.className = "hiddenIdSpan";
-        hiddenIdSpan.id = JSON.parse(localStorage.posts).length -1;
-        newPost.appendChild(hiddenIdSpan);
-
-
 
         console.log(JSON.parse(localStorage.posts));
         newPost.appendChild(whoPosted);
@@ -123,7 +115,8 @@ function newPostTyping() {
     if(enlarge.firstElementChild.className != 'xBtnParent') {
         enlarge.insertBefore(xBtnParent, enlarge.children[0]);
     }
-    xBtn.addEventListener('click', newPostCanceled)
+
+    xBtn.addEventListener('click', newPostCanceled);
 }
 
 function newPostCanceled() {
@@ -150,19 +143,10 @@ function newPostCanceled() {
 
 function deletePost(a) {
     if(a.target.id === 'trashCan') {
-        console.log(a.target.parentElement.parentElement.firstElementChild.parentElement.firstChild);
-        console.log(JSON.parse(localStorage.posts));
-        let posts = JSON.parse(localStorage.posts);
-        posts.forEach((obj)=>{
-            if(obj.id == a.target.parentElement.parentElement.firstElementChild.id) {
-                posts.splice(a.target.parentElement.parentElement.firstElementChild.parentElement.firstChild, 1);
-                localStorage.posts = JSON.stringify(posts);
-                console.log(posts)
-            }
-        });
-
+        console.log(a.target.parentElement.nextElementSibling.innerText);
 
         a.target.parentElement.parentElement.remove();
+
     }
 }
 
@@ -209,3 +193,52 @@ document.addEventListener('click', deletePost)
 // let list = new SinglyLinkedList();
 // // list.push(1);
 // // console.log(list)
+
+
+
+
+
+
+// posts?userId=3&limit=1
+// url + ? + params=value
+
+
+
+fetch("https://jsonplaceholder.typicode.com/users")
+    .then(function(response){
+        return response.json()
+    })
+    .then(function(result){
+        console.log(result)
+        let usersData = result;
+        result.forEach((user)=>{
+            document.body.insertAdjacentHTML('afterbegin', `
+                <h1 id="userName-${user.id}">${user.name}</h1>
+            `)
+        })
+    })
+
+function showPosts(event) {
+    console.log(event.target)
+}
+
+// <input 333333=id hidden />  ---------------> ene argaar gardh irsen post deeree local storage deerees songoj ustgah id g ogch bolno
+
+document.addEventListener('click', (a)=>{
+    if(a.target.id.split('-')[0] === 'userName') {
+        console.log(a.target.innerText)
+        console.log(a.target.id.split('-')[1])
+        let selectedUserId = a.target.id.split('-')[1]; 
+        getPosts(selectedUserId)
+    }
+})
+
+function getPosts(id){
+    fetch("https://jsonplaceholder.typicode.com/posts?userId=" + id) 
+        .then(function(response){
+            return response.json()
+        })
+        .then(function(result){
+            console.log(result)
+        })
+}

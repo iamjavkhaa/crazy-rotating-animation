@@ -20,6 +20,70 @@ if(localStorage.users != undefined) {
 
 
 
+// ------------------enter darah event-------------------------
+
+const lnameLog = document.querySelector('#lname');
+const fnameLog = document.querySelector('#fname');
+const phoneLog = document.querySelector('#number');
+const emailLog = document.querySelector('#email');
+const passwordLog = document.querySelector('#password');
+
+
+const onep = document.querySelector('.lname-p')
+const twop = document.querySelector('.lname-p-d')
+const threep = document.querySelector('.fname-p')
+const fourp = document.querySelector('.fname-p-d')
+const fivep = document.querySelector('.only-number')
+const sixp = document.querySelector('.if_8')
+const sevenp = document.querySelector('.right-email')
+const eightp = document.querySelector('.password')
+
+lnameLog.addEventListener('keyup', (event)=>{
+    if(event.keyCode === 13) {
+        if(onep.style.color === "blue" && twop.style.color === "blue") {
+            fnameLog.focus();
+        }
+    }
+});
+
+fnameLog.addEventListener('keyup', (event) => {
+    if(event.keyCode === 13) {
+        if(threep.style.color === 'blue' && fourp.style.color === 'blue') {
+            phoneLog.focus();
+        }
+    }
+});
+
+phoneLog.addEventListener('keyup', (event) =>{
+    if(event.keyCode === 13) {
+        if(fivep.style.color === 'blue' && sixp.style.color === 'blue') {
+            emailLog.focus();
+        }
+    }
+});
+
+emailLog.addEventListener('keyup', (event) => {
+    if(event.keyCode === 13) {
+        if(sevenp.style.color === 'blue') {
+            passwordLog.focus();
+        }
+    }
+});
+
+passwordLog.addEventListener('keyup', (event) => {
+    if(event.keyCode === 13) {
+        if(eightp.style.color === 'blue') {
+            zail();
+        } else {
+            alert('нууц үг: 8 үетэй,   том үсэг орсон,  тоо орсон,   тусгай тэмдэгт орсон байх ёстой')
+        }
+    }
+});
+
+// ------------------enter darah event END-------------------------
+
+
+
 
 function passwordCheck() {
     pass = document.querySelector('#password').value;
@@ -152,14 +216,6 @@ function fnameChange() {
 }
 
 function zail() {     
-    var onep = document.querySelector('.lname-p')
-    var twop = document.querySelector('.lname-p-d')
-    var threep = document.querySelector('.fname-p')
-    var fourp = document.querySelector('.fname-p-d')
-    var fivep = document.querySelector('.only-number')
-    var sixp = document.querySelector('.if_8')
-    var sevenp = document.querySelector('.right-email')
-    var eightp = document.querySelector('.password')
     if(    ( onep.style.color === 'blue') 
         && (twop.style.color === "blue")
         && (threep.style.color === 'blue')
@@ -169,17 +225,10 @@ function zail() {
         && (sevenp.style.color === 'blue')
         && (eightp.style.color === 'blue')    
     ) {
-        // document.querySelector('form').style.display = 'none';
-        // document.querySelector('.pop-up').style.display = 'block';
         user.push({lastname: lname, firstname: fname, phone: number, email: email, password: pass});
-        // user.lastname = lname;
-        // user.firstname = fname;
-        // user.phone = number;
-        // user.email = email;
-        // user.password = pass;
         localStorage.users = JSON.stringify(user)
+        localStorage.whoLoggedIn = JSON.stringify({lastname: lname, firstname: fname, phone: number, email: email, password: pass});
         console.log(user)
-        // user = {};
         lname = "";
         fname = "";
         number = '';
