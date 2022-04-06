@@ -241,7 +241,7 @@ function zail() {
         document.querySelector('#password').value = ''
         alert('амжилттай бүртгэгдлээ');
         user = JSON.parse(localStorage.users);
-        window.location.href = "../../../home/home.html";
+        window.location.href = "../home/home.html";
     } else {
         alert('үнэн зөв бөглөнө үү');
     }
