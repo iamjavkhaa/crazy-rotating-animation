@@ -1,0 +1,45 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+body{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 70px;
+    background-color: black;
+}
+
+div {
+    width: 100%;
+    height: 100%;
+    background-color: var(--st);
+    animation: breathe 12.2s linear infinite ;
+    --st: #f9dc5cff;
+    --end: rgb(0, 255, 234);
+}
+
+@keyframes breathe {
+    0% {
+        width: 100%;
+        height: 100%;
+        background-color: var(--st);
+    }
+    58.3% {
+        width: 66%;
+        height: 66%;
+        background-color: var(--end);
+    }
+    100% {
+        width: 100%;
+        height: 100%;
+        background-color: var(--st);
+    }
+}
+

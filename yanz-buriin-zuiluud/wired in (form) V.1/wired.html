@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wired</title>
+    <link rel="stylesheet" href="./wired.css">
+</head>
+<body>
+
+    <div class="anime-cont">
+        <div class="anime"></div>
+    </div>
+    
+    <form action="" method="get" >
+        <div class="outer" >
+            <div class="upper-div">
+                <label for="lname">Last name: </label>
+                <input autofocus id="lname" placeholder=" Last  Name..." name="name" type="text" oninput="lnameChange()"   autocomplete="off"  >    
+            </div>
+
+            <div class="sub-div">
+                <p class="lname-p" >2 -оос дээш үсэгтэй байх</p>
+                <p class="lname-p-d" >тоо ороогүй байх</p>
+            </div>
+        </div>
+
+        <div class="outer">
+            <div class="upper-div">
+                <label for="fname"> First  Name: </label>
+                <input type="text" id="fname" placeholder=" First  Name..." oninput="fnameChange()" autocomplete="off" >    
+            </div>
+
+            <div class="sub-div" >
+                <p class="fname-p" >2 -оос дээш үсэгтэй байх</p>
+                <p class="fname-p-d" >тоо ороогүй байх</p>
+            </div>
+        </div>
+
+        <div class="outer">
+            <div class="upper-div">
+                <label for="number">утас: </label>
+                <input id="number" type="text" autocomplete="off" placeholder="утас..." oninput="numberChange()" >    
+            </div>
+
+            <div class="sub-div">
+                <p class="only-number" >дан тоо орсон байх ёстой</p>
+                <p class="if_8" >8 оронтой байх ёстой</p>
+            </div>
+        </div>
+
+        <div class="outer">
+            <div class="upper-div">
+                <label for="email">email: </label>
+                <input type="text" id="email" oninput="emailChange()" autocomplete="off" placeholder="email...">
+            </div>
+
+            <div class="sub-div">
+                <p class="right-email" >email зөв байна</p>
+            </div>
+        </div>
+
+        <div class="outer">
+            <div class="upper-div">
+                <label for="password">password: </label>
+                <input oninput="passwordCheck()"  type="text" id="password" placeholder="password..." autocomplete="off">    
+            </div>
+
+            <div class="sub-div">
+                <p class="password">correct password</p>
+            </div>
+        </div>
+        <div  class="sub-div">
+            <button type="button" id="lastBtn"  >submit</button>
+        </div>
+    </form>
+
+    <div class="pop-up"> бүртгүүлсэнд баярлалаа </div>
+
+
+
+    <script src="./wired.js"></script>
+</body>
+</html>

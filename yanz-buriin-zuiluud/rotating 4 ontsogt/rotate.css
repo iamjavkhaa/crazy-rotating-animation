@@ -1,0 +1,42 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(to top left, #33c3b6, rgb(199 203 219), rgb(233 76 163));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden !important;
+}
+
+div {
+    width: var(--size);
+    height: var(--size);
+    transform: rotate(45deg);
+    animation: ergeh 1000000s linear infinite;
+    background-image: linear-gradient(to top left, #33c3b6, rgb(199 203 219), rgb(233 76 163));
+    filter: blur(5px)
+}
+:root {
+    --size: 35rem;
+    --pos: 1;
+}
+#second {
+    position: absolute;
+    left: var(--pos);
+    top: var(--pos);
+    right: var(--pos);
+    bottom: var(--pos);
+    transform: rotate(180deg) !important;
+}
+
+@keyframes ergeh {
+    to {
+        transform: rotate(36000000deg);
+    }
+}

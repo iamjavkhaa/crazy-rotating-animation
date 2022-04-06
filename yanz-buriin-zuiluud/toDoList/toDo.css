@@ -1,0 +1,64 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+
+.outer-box {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.outer-box .box {
+    width: 26rem;
+    height: 29rem;
+    background-color: yellow;
+}
+
+.box-header {
+    width: 100%;
+    height: 20%;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+}
+
+#addBtn, #doneBtn {
+    font-size: calc(2rem - 7px);
+    height: 60%;
+    padding: 5px;
+}
+
+#addList {
+    display: none;
+    font-size: 1rem;
+    position: absolute;
+    width: 75%;
+    height: 50%;
+    bottom: -46px;
+    box-shadow: 1px 1px 7px 3px grey;
+    padding: calc(1rem - 9px);
+}
+
+
+.box-footer {
+    width: 100%;
+    height: 80%;
+    background-color: transparent;
+    padding: 1rem;
+    overflow-y: scroll;
+}
+
+p {
+    font-size: calc(1rem + 4px)
+}

@@ -1,0 +1,89 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+:root {
+    --pink: #ff0090;
+    --focus: purple;
+}
+body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to right top, #e100ff, #f0e0e0, #00ff45);
+}
+.body-in {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 150px;
+}
+form {
+    width: 396px;
+    height: 315px;
+    justify-content: space-around;
+    align-items: center;
+    display: flex;    
+    flex-direction: column;
+    padding: 10px 17px 24px 17px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0px 0px 20px 1px #80808036;
+    border-radius: 8px;
+    
+}
+.javebook {
+    font-size: 56px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    color: #10ff00;
+    text-shadow: 5px 3px 5px white;
+}
+input {
+    width: 100%;
+    height: 50px;
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-size: 17px;
+    border: 1px solid #dddfe2;
+    vertical-align: middle;
+    outline: none;
+    transition: 0.5s;
+}
+input:focus {
+    border: 1px solid var(--focus);
+}
+button {
+    width: 330px;
+    height: 42px;
+    border-radius: 6px;
+    font-size: 17px;
+    border: none;
+    font-size: 20px;
+    color: white;
+}
+button:hover {
+    background-color: #0d61cf !important;
+    transition: .2s cubic-bezier(.08,.52,.52,1);
+    cursor: pointer;
+}
+
+#login {
+    background-color: var(--pink);
+    font-weight: 700;
+    font-size: 1.4rem;
+    padding: 0 16px;
+}
+#create-new {
+    width: 210px;
+    height: 47px;
+    padding: 0 16px;
+    background-color: #10ff00;
+    font-size: 1rem;
+    font-weight: 700;
+}
