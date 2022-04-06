@@ -2,6 +2,12 @@ let whoLoggedIn = JSON.parse(localStorage.whoLoggedIn);
 const newPostParent = document.querySelector('.main');
 const newPostInput = document.querySelector('#new-post-input');
 
+if(localStorage.posts != undefined) {
+    posts = JSON.parse(localStorage.posts)
+} else  {
+    posts = []; 
+}
+
 
 
 newPostInput.addEventListener('keyup', (event)=> {
@@ -10,13 +16,6 @@ newPostInput.addEventListener('keyup', (event)=> {
     }
 });
 
-if(localStorage.posts != undefined) {
-    posts = JSON.parse(localStorage.posts)
-} else  {
-    posts = []; 
-}
-
-// console.log('User: ', whoLoggedIn);
 
 function postSync() {
     if(localStorage.posts != undefined) {
@@ -37,6 +36,12 @@ function postSync() {
             circleEllips.id = 'trashCan';
             whoPosted.appendChild(circleEllips);
     
+
+            let postId = document.createElement('input');
+            postId.className = "postId";
+            postId.value = JSON.parse(el.id);
+
+            newPost.appendChild(postId)
             newPost.appendChild(whoPosted);
             newPost.appendChild(newPostText);
             newPostParent.appendChild(newPost);
@@ -65,11 +70,11 @@ function addPost() {
         newPostText.id = 'new-post-text';
         newPostText.innerText = newPostInput.value;
 
-        if(localStorage.posts === undefined) {
+        if(localStorage.posts == undefined) {
             localStorage.posts = JSON.stringify([{post: newPostInput.value, id: 0}])
         } else {
             let posts = JSON.parse(localStorage.posts);
-            posts.push({post: newPostInput.value,   id: JSON.parse(localStorage.posts).length  });
+            posts.push({post: newPostInput.value,   id: JSON.parse(localStorage.posts).length });
             localStorage.posts = JSON.stringify(posts)
         }
 
@@ -78,7 +83,15 @@ function addPost() {
         circleEllips.id = 'trashCan';
         whoPosted.appendChild(circleEllips);
 
-        console.log(JSON.parse(localStorage.posts));
+        
+        let postId = document.createElement('input');
+        postId.className = "postId";
+        let x  = JSON.parse(localStorage.posts)
+        postId.value = x.length - 1;
+        
+
+        newPost.appendChild(postId)
+
         newPost.appendChild(whoPosted);
         newPost.appendChild(newPostText);
         newPostParent.appendChild(newPost);
@@ -141,12 +154,26 @@ function newPostCanceled() {
     enlarge.removeChild(enlarge.firstElementChild);
 }
 
+
 function deletePost(a) {
     if(a.target.id === 'trashCan') {
-        console.log(a.target.parentElement.nextElementSibling.innerText);
-
         a.target.parentElement.parentElement.remove();
 
+        posts.forEach(function(el) {
+            if(el.id == a.target.parentElement.parentElement.firstElementChild.value ) {
+                posts.splice(a.target.parentElement.parentElement.firstElementChild.value , 1);
+            } 
+        });
+
+        for(var i = 0; i < posts.length; i++) {
+            let postIdInputs = document.getElementsByClassName('postId');
+            postIdInputs = [...postIdInputs]
+
+            postIdInputs[i].value = i;
+            posts[i].id = i ;
+        }
+        
+        localStorage.posts = JSON.stringify(posts);
     }
 }
 
@@ -204,41 +231,41 @@ document.addEventListener('click', deletePost)
 
 
 
-fetch("https://jsonplaceholder.typicode.com/users")
-    .then(function(response){
-        return response.json()
-    })
-    .then(function(result){
-        console.log(result)
-        let usersData = result;
-        result.forEach((user)=>{
-            document.body.insertAdjacentHTML('afterbegin', `
-                <h1 id="userName-${user.id}">${user.name}</h1>
-            `)
-        })
-    })
+// fetch("https://jsonplaceholder.typicode.com/users")
+//     .then(function(response){
+//         return response.json()
+//     })
+//     .then(function(result){
+//         console.log(result)
+//         let usersData = result;
+//         result.forEach((user)=>{
+//             document.body.insertAdjacentHTML('afterbegin', `
+//                 <h1 id="userName-${user.id}">${user.name}</h1>
+//             `)
+//         })
+//     })
 
-function showPosts(event) {
-    console.log(event.target)
-}
+// function showPosts(event) {
+//     console.log(event.target)
+// }
 
 // <input 333333=id hidden />  ---------------> ene argaar gardh irsen post deeree local storage deerees songoj ustgah id g ogch bolno
 
-document.addEventListener('click', (a)=>{
-    if(a.target.id.split('-')[0] === 'userName') {
-        console.log(a.target.innerText)
-        console.log(a.target.id.split('-')[1])
-        let selectedUserId = a.target.id.split('-')[1]; 
-        getPosts(selectedUserId)
-    }
-})
+// document.addEventListener('click', (a)=>{
+//     if(a.target.id.split('-')[0] === 'userName') {
+//         console.log(a.target.innerText)
+//         console.log(a.target.id.split('-')[1])
+//         let selectedUserId = a.target.id.split('-')[1]; 
+//         getPosts(selectedUserId)
+//     }
+// })
 
-function getPosts(id){
-    fetch("https://jsonplaceholder.typicode.com/posts?userId=" + id) 
-        .then(function(response){
-            return response.json()
-        })
-        .then(function(result){
-            console.log(result)
-        })
-}
+// function getPosts(id){
+//     fetch("https://jsonplaceholder.typicode.com/posts?userId=" + id) 
+//         .then(function(response){
+//             return response.json()
+//         })
+//         .then(function(result){
+//             console.log(result)
+//         })
+// }

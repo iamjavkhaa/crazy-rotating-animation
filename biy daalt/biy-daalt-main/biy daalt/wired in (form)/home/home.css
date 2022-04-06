@@ -183,6 +183,12 @@ body {
     word-spacing: 3px;
     word-wrap: break-word;
 }
-.hiddenIdSpan {
-    display: block;
+
+
+.postId {
+    display: none;  
+}
+
+input:nth-child(0) {
+    background-color: yellow;
 }
