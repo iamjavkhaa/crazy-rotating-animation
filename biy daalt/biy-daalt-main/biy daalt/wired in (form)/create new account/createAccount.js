@@ -225,10 +225,10 @@ function zail() {
         && (sevenp.style.color === 'blue')
         && (eightp.style.color === 'blue')    
     ) {
-        user.push({lastname: lname, firstname: fname, phone: number, email: email, password: pass});
+        user.push({lastname: lname, firstname: fname, phone: number, email: email, password: pass, id: user.length});
         localStorage.users = JSON.stringify(user)
-        localStorage.whoLoggedIn = JSON.stringify({lastname: lname, firstname: fname, phone: number, email: email, password: pass});
-        console.log(user)
+        localStorage.whoLoggedIn = JSON.stringify({lastname: lname, firstname: fname, phone: number, email: email, password: pass, id: user.length});
+        console.log(user);
         lname = "";
         fname = "";
         number = '';

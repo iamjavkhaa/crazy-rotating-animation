@@ -41,9 +41,24 @@ function postSync() {
             postId.className = "postId";
             postId.value = JSON.parse(el.id);
 
-            newPost.appendChild(postId)
+            let divider = document.createElement('div');
+            divider.className = 'divider';
+
+            let commentsParent = document.createElement('div');
+            commentsParent.id = 'commentsParent';
+
+            let addCommentEl = document.createElement('input');
+            addCommentEl.id = 'addCommentEl';
+            addCommentEl.placeholder = 'add comment';
+
+            newPost.appendChild(postId);
             newPost.appendChild(whoPosted);
             newPost.appendChild(newPostText);
+            newPost.appendChild(divider);
+            newPost.appendChild(commentsParent);
+            newPost.appendChild(addCommentEl);
+
+
             newPostParent.appendChild(newPost);
         });
     }
@@ -88,13 +103,27 @@ function addPost() {
         postId.className = "postId";
         let x  = JSON.parse(localStorage.posts)
         postId.value = x.length - 1;
-        
+
+        let divider = document.createElement('div');
+        divider.className = 'divider';
+
+        let commentsParent = document.createElement('div');
+        commentsParent.id = 'commentsParent';
+
+        let addCommentEl = document.createElement('input');
+        addCommentEl.id = 'addCommentEl';
+        addCommentEl.placeholder = 'add comment';
+
 
         newPost.appendChild(postId)
-
         newPost.appendChild(whoPosted);
         newPost.appendChild(newPostText);
+        newPost.appendChild(divider);
+        newPost.appendChild(commentsParent);
+        newPost.appendChild(addCommentEl);
+
         newPostParent.appendChild(newPost);
+
         newPostInput.value = '';
         newPostCanceled();
     }
@@ -177,7 +206,52 @@ function deletePost(a) {
     }
 }
 
-document.addEventListener('click', deletePost)
+
+function addComment(newCommentInput) {
+    let commentsParent = document.querySelector('commentsParent');
+
+    if(newCommentInput.value !== '' && /[^ ]/.test(newCommentInput.value) === true ){
+        let comments;
+        if(localStorage.comments != undefined) {
+            comments = JSON.parse(localStorage.comments)
+        } else  {
+            comments = []; 
+        }
+        
+        let newComment = document.createElement('div');
+        newComment.id = 'newComment';
+
+        let newCommentOwner = document.createElement('div');
+        newCommentOwner.id = 'newCommentOwner';
+        newCommentOwner.innerText = whoLoggedIn.firstname;
+
+        let newCommentText = document.createElement('p');
+        newCommentText.id = 'newCommentText';
+        newCommentText.innerText = newCommentInput.value;
+
+
+        newComment.appendChild(newCommentOwner);
+        newComment.appendChild(newCommentText);
+
+
+        newCommentInput.previousElementSibling.appendChild(newComment);
+        newCommentInput.value = '';
+    }
+}
+
+
+
+document.addEventListener('click', (event) => {
+    if(event.target.id === 'addCommentEl') {
+        event.target.addEventListener('keyup', (key) => {
+            if(key.keyCode === 13) {
+                addComment(key.target);
+            };
+        });
+    }
+});
+
+document.addEventListener('click', deletePost);
 
 
 // let posts = [];
