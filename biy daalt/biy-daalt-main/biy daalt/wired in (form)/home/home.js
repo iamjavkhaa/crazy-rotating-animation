@@ -1,6 +1,10 @@
-let whoLoggedIn = JSON.parse(localStorage.whoLoggedIn);
+let whoLoggedIn;
+if(localStorage.whoLoggedIn != undefined) {
+    whoLoggedIn = JSON.parse(localStorage.whoLoggedIn);
+}
 const newPostParent = document.querySelector('.main');
 const newPostInput = document.querySelector('#new-post-input');
+let comments;
 
 if(localStorage.posts != undefined) {
     posts = JSON.parse(localStorage.posts)
@@ -25,8 +29,13 @@ function postSync() {
         
             let whoPosted = document.createElement('div');
             whoPosted.id = 'whoPosted';
-            whoPosted.innerText = whoLoggedIn.firstname;
-        
+            JSON.parse(localStorage.users).forEach((a)=> {
+                if(a.id == el.userId) {
+                    whoPosted.innerText = a.firstname;
+                }
+            })
+
+    
             let newPostText = document.createElement('div');
             newPostText.id = 'new-post-text';
             newPostText.innerText = el.post;
@@ -50,6 +59,43 @@ function postSync() {
             let addCommentEl = document.createElement('input');
             addCommentEl.id = 'addCommentEl';
             addCommentEl.placeholder = 'add comment';
+
+
+            if(localStorage.comments != undefined) {
+
+                JSON.parse(localStorage.comments).forEach((commentPar) => {
+                    if(el.id == commentPar.postId ) {
+                        let newComment = document.createElement('div');
+                        newComment.id = 'newComment';
+                
+                        let newCommentOwner = document.createElement('div');
+                        newCommentOwner.id = 'newCommentOwner';
+                        
+                        let commentUserIdCheck;
+                        let commentUserCheck = JSON.parse(localStorage.users).forEach(
+                            (usersForEach) => {
+                                if(usersForEach.id == commentPar.userId) {
+                                    commentUserIdCheck = usersForEach.firstname 
+                                    console.log('--------------------------------')
+                                    console.log(usersForEach)
+                                }
+                            }
+                        );
+                        newCommentOwner.innerText = commentUserIdCheck; 
+                
+                        let newCommentText = document.createElement('p');
+                        newCommentText.id = 'newCommentText';
+                        newCommentText.innerText = commentPar.comment;
+                
+                
+                        newComment.appendChild(newCommentOwner);
+                        newComment.appendChild(newCommentText);
+                        commentsParent.appendChild(newComment);
+                
+                    }
+                });
+            }
+ 
 
             newPost.appendChild(postId);
             newPost.appendChild(whoPosted);
@@ -79,24 +125,29 @@ function addPost() {
 
         let whoPosted = document.createElement('div');
         whoPosted.id = 'whoPosted';
-        whoPosted.innerText = whoLoggedIn.firstname;
+        // JSON.parse(localStorage.users).forEach((el) => {
+        //     if(el.id == whoLoggedIn.id) {
+        //         whoPosted.innerText = el.firstname;
+        //     }
+        // })
+
 
         let newPostText = document.createElement('div');
         newPostText.id = 'new-post-text';
         newPostText.innerText = newPostInput.value;
 
         if(localStorage.posts == undefined) {
-            localStorage.posts = JSON.stringify([{post: newPostInput.value, id: 0}])
+            localStorage.posts = JSON.stringify([{post: newPostInput.value, id: 0, userId: whoLoggedIn.id }])
         } else {
             let posts = JSON.parse(localStorage.posts);
-            posts.push({post: newPostInput.value,   id: JSON.parse(localStorage.posts).length });
+            posts.push({post: newPostInput.value,   id: JSON.parse(localStorage.posts).length,   userId: whoLoggedIn.id });
             localStorage.posts = JSON.stringify(posts)
         }
 
         let circleEllips = document.createElement('i');
         circleEllips.className = 'fa-regular fa-trash-can';
         circleEllips.id = 'trashCan';
-        whoPosted.appendChild(circleEllips);
+        // whoPosted.appendChild(circleEllips);
 
         
         let postId = document.createElement('input');
@@ -115,12 +166,39 @@ function addPost() {
         addCommentEl.placeholder = 'add comment';
 
 
-        newPost.appendChild(postId)
+        newPost.appendChild(postId);
         newPost.appendChild(whoPosted);
         newPost.appendChild(newPostText);
         newPost.appendChild(divider);
         newPost.appendChild(commentsParent);
         newPost.appendChild(addCommentEl);
+
+
+        let idOfPost = whoPosted.parentElement.firstElementChild.value;
+        console.log(idOfPost);
+        let postedUserId;
+
+        if(localStorage.posts != undefined) {
+            JSON.parse(localStorage.posts).forEach(
+                (arg) => {
+                    if(idOfPost == arg.id) {
+                        postedUserId = arg.userId;
+                        console.log(postedUserId);
+                    }
+                }
+            )
+        }
+
+        JSON.parse(localStorage.users).forEach(
+            (arg) => {
+                if(arg.id == postedUserId) {
+                    whoPosted.innerText = arg.firstname;
+                }
+            }
+        );
+        whoPosted.appendChild(circleEllips);
+
+
 
         newPostParent.appendChild(newPost);
 
@@ -188,11 +266,23 @@ function deletePost(a) {
     if(a.target.id === 'trashCan') {
         a.target.parentElement.parentElement.remove();
 
-        posts.forEach(function(el) {
-            if(el.id == a.target.parentElement.parentElement.firstElementChild.value ) {
-                posts.splice(a.target.parentElement.parentElement.firstElementChild.value , 1);
+        posts.forEach (
+            function(el) {
+                if(el.id == a.target.parentElement.parentElement.firstElementChild.value ) {
+                    posts.splice(a.target.parentElement.parentElement.firstElementChild.value , 1);
+                };
+            }
+        );
+
+        let comments = JSON.parse(localStorage.comments);
+        let commentsUpdated = [];
+
+        for(var i = 0; i < comments.length; i++) {
+            if(comments[i].postId != a.target.parentElement.parentElement.firstElementChild.value) {
+                commentsUpdated.push(comments[i]);
+                localStorage.comments = JSON.stringify(commentsUpdated);
             } 
-        });
+        }
 
         for(var i = 0; i < posts.length; i++) {
             let postIdInputs = document.getElementsByClassName('postId');
@@ -211,7 +301,6 @@ function addComment(newCommentInput) {
     let commentsParent = document.querySelector('commentsParent');
 
     if(newCommentInput.value !== '' && /[^ ]/.test(newCommentInput.value) === true ){
-        let comments;
         if(localStorage.comments != undefined) {
             comments = JSON.parse(localStorage.comments)
         } else  {
@@ -232,9 +321,17 @@ function addComment(newCommentInput) {
 
         newComment.appendChild(newCommentOwner);
         newComment.appendChild(newCommentText);
-
-
         newCommentInput.previousElementSibling.appendChild(newComment);
+
+        // --  local storage ruu hiih   START
+        
+        comments.push( {comment: newCommentInput.value, userId: whoLoggedIn.id, postId: newCommentInput.parentElement.firstChild.value } )
+
+        localStorage.comments = JSON.stringify(comments)
+
+        console.log(JSON.parse(localStorage.comments))
+        // --  local storage ruu hiih   END
+        
         newCommentInput.value = '';
     }
 }

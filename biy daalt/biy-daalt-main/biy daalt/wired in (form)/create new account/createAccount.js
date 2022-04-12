@@ -227,7 +227,7 @@ function zail() {
     ) {
         user.push({lastname: lname, firstname: fname, phone: number, email: email, password: pass, id: user.length});
         localStorage.users = JSON.stringify(user)
-        localStorage.whoLoggedIn = JSON.stringify({lastname: lname, firstname: fname, phone: number, email: email, password: pass, id: user.length});
+        localStorage.whoLoggedIn = JSON.stringify({lastname: lname, firstname: fname, phone: number, email: email, password: pass, id: user.length - 1});
         console.log(user);
         lname = "";
         fname = "";
@@ -241,7 +241,7 @@ function zail() {
         document.querySelector('#password').value = ''
         alert('амжилттай бүртгэгдлээ');
         user = JSON.parse(localStorage.users);
-        window.location.href = "../home/home.html";
+        window.location.href = "../../home/home.html";
     } else {
         alert('үнэн зөв бөглөнө үү');
     }
