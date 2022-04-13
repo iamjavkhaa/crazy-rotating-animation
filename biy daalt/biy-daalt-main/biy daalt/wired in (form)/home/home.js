@@ -7,6 +7,7 @@ const newPostParent = document.querySelector('.main');
 const newPostInput = document.querySelector('#new-post-input');
 let comments;
 let posts;
+let commentsUpdated = [];
 
 if(localStorage.posts != undefined || localStorage.posts === '[]') {
     posts = JSON.parse(localStorage.posts)
@@ -300,13 +301,15 @@ function deletePost(a) {
         console.log(postsUpdate)
 
         let comments = JSON.parse(localStorage.comments);
-        let commentsUpdated = [];
 
         for(var i = 0; i < comments.length; i++) {
             if(comments[i].postId != a.target.parentElement.parentElement.firstElementChild.value) {
                 commentsUpdated.push(comments[i]);
                 localStorage.comments = JSON.stringify(commentsUpdated);
             } 
+            else {
+                localStorage.comments = JSON.stringify(commentsUpdated)
+            }
             // else {
             //     localStorage.comments = JSON.stringify(commentsUpdated)
             //     // console.log('delete hiih nohtsol biylsengui. Reason:  ');
