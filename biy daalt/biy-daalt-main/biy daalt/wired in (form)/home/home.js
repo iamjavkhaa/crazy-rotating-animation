@@ -279,9 +279,14 @@ function deletePost(a) {
 
         for(var i = 0; i < comments.length; i++) {
             if(comments[i].postId != a.target.parentElement.parentElement.firstElementChild.value) {
-                commentsUpdated.push(comments[i]);
+                commentsUpdated.push(comments[i]);2
+                console.log(comments[i])
                 localStorage.comments = JSON.stringify(commentsUpdated);
+                console.log(commentsUpdated)
             } 
+            // else {
+            //     console.log(commentsUpdated)
+            // }
         }
 
         for(var i = 0; i < posts.length; i++) {
