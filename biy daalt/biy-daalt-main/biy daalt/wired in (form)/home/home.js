@@ -1,12 +1,14 @@
 let whoLoggedIn;
+let postIdNote = -1;
 if(localStorage.whoLoggedIn != undefined) {
     whoLoggedIn = JSON.parse(localStorage.whoLoggedIn);
 }
 const newPostParent = document.querySelector('.main');
 const newPostInput = document.querySelector('#new-post-input');
 let comments;
+let posts;
 
-if(localStorage.posts != undefined) {
+if(localStorage.posts != undefined || localStorage.posts === '[]') {
     posts = JSON.parse(localStorage.posts)
 } else  {
     posts = []; 
@@ -22,8 +24,8 @@ newPostInput.addEventListener('keyup', (event)=> {
 
 
 function postSync() {
-    if(localStorage.posts != undefined) {
-        JSON.parse(localStorage.posts).forEach(function(el) {
+    if(localStorage.posts != undefined || localStorage.posts == '[]') {
+        posts.forEach(function(el) {
             let newPost = document.createElement('div');
             newPost.id = 'new-post';
         
@@ -48,7 +50,8 @@ function postSync() {
 
             let postId = document.createElement('input');
             postId.className = "postId";
-            postId.value = JSON.parse(el.id);
+            // postId.value = JSON.parse(el.id);
+            postId.value = el.id;
 
             let divider = document.createElement('div');
             divider.className = 'divider';
@@ -109,7 +112,6 @@ function postSync() {
         });
     }
 }
-
 postSync();
 
 newPostInput.addEventListener('keyup', function(event) {
@@ -118,6 +120,8 @@ newPostInput.addEventListener('keyup', function(event) {
     }
 })
 
+// Array.prototype.breakableForEach()
+
 function addPost() {
     if(/[^ ]/.test(newPostInput.value) === true) {
         let newPost = document.createElement('div');
@@ -125,35 +129,27 @@ function addPost() {
 
         let whoPosted = document.createElement('div');
         whoPosted.id = 'whoPosted';
-        // JSON.parse(localStorage.users).forEach((el) => {
-        //     if(el.id == whoLoggedIn.id) {
-        //         whoPosted.innerText = el.firstname;
-        //     }
-        // })
-
 
         let newPostText = document.createElement('div');
         newPostText.id = 'new-post-text';
         newPostText.innerText = newPostInput.value;
 
-        if(localStorage.posts == undefined) {
-            localStorage.posts = JSON.stringify([{post: newPostInput.value, id: 0, userId: whoLoggedIn.id }])
-        } else {
-            let posts = JSON.parse(localStorage.posts);
-            posts.push({post: newPostInput.value,   id: JSON.parse(localStorage.posts).length,   userId: whoLoggedIn.id });
-            localStorage.posts = JSON.stringify(posts)
-        }
+        posts.push({post: newPostInput.value,   id: postIdNote + 1,   userId: whoLoggedIn.id });
+        localStorage.posts = JSON.stringify(posts)
+        postIdNote = postIdNote + 1;
+
+        // if(localStorage.posts == "[]" || localStorage.posts === undefined) {
+        //     localStorage.posts = JSON.stringify([{post: newPostInput.value, id: postIdNote, userId: whoLoggedIn.id }])
+        // } else {
+        // }
 
         let circleEllips = document.createElement('i');
         circleEllips.className = 'fa-regular fa-trash-can';
         circleEllips.id = 'trashCan';
-        // whoPosted.appendChild(circleEllips);
-
         
         let postId = document.createElement('input');
         postId.className = "postId";
-        let x  = JSON.parse(localStorage.posts)
-        postId.value = x.length - 1;
+        postId.value = postIdNote;
 
         let divider = document.createElement('div');
         divider.className = 'divider';
@@ -175,13 +171,13 @@ function addPost() {
 
 
         let idOfPost = whoPosted.parentElement.firstElementChild.value;
-        console.log(idOfPost);
         let postedUserId;
 
-        if(localStorage.posts != undefined) {
-            JSON.parse(localStorage.posts).forEach(
+        if(localStorage.posts != undefined && localStorage.posts != '[]') {
+            posts.forEach(
                 (arg) => {
-                    if(idOfPost == arg.id) {
+                    console.log(idOfPost , '===' , arg.id)  
+                    if(idOfPost == arg.id) {    
                         postedUserId = arg.userId;
                         console.log(postedUserId);
                     }
@@ -189,13 +185,31 @@ function addPost() {
             )
         }
 
-        JSON.parse(localStorage.users).forEach(
-            (arg) => {
-                if(arg.id == postedUserId) {
-                    whoPosted.innerText = arg.firstname;
-                }
+        // JSON.parse(localStorage.users).forEach(         //  forEach() iin orond every ashiglaj bolno 
+        //     (arg) => {
+        //         console.log(arg.id , '----' , postedUserId)
+        //         if(arg.id == postedUserId) {
+        //             whoPosted.innerText = arg.firstname;
+        //         } 
+        //     }
+        // )
+
+        for(var i = 0; i < JSON.parse(localStorage.users).length; i++) {
+            console.log(JSON.parse(localStorage.users)[i].id , '----' , postedUserId)
+            if(JSON.parse(localStorage.users)[i].id == postedUserId) {
+                whoPosted.innerText = JSON.parse(localStorage.users)[i].firstname;
+                break;
             }
-        );
+        }
+
+        // JSON.parse(localStorage.users).forEach(
+        //     (arg) => {
+        //         if(arg.id == postedUserId) {
+        //             whoPosted.innerText = arg.firstname;
+        //         }
+        //     }
+        // );
+
         whoPosted.appendChild(circleEllips);
 
 
@@ -265,39 +279,40 @@ function newPostCanceled() {
 function deletePost(a) {
     if(a.target.id === 'trashCan') {
         a.target.parentElement.parentElement.remove();
+        let posts = JSON.parse(localStorage.posts)
+        let postsUpdate = [];
 
         posts.forEach (
             function(el) {
+                console.log(el.id, '---' , a.target.parentElement.parentElement.firstElementChild.value)
                 if(el.id == a.target.parentElement.parentElement.firstElementChild.value ) {
-                    posts.splice(a.target.parentElement.parentElement.firstElementChild.value , 1);
-                };
+                    // posts.splice(a.target.parentElement.parentElement.firstElementChild.value , 1);
+                    // console.log(el.id , 'iim id tai postiig Delete hiilee')
+                    console.log('устгах постны ID олдлоо')
+                    console.log(el.id , '==' , a.target.parentElement.parentElement.firstElementChild.value)
+                } else {
+                    postsUpdate.push(el)
+                    console.log(el)
+                }
             }
         );
+        localStorage.posts = JSON.stringify(postsUpdate);
+        console.log(postsUpdate)
 
         let comments = JSON.parse(localStorage.comments);
         let commentsUpdated = [];
 
         for(var i = 0; i < comments.length; i++) {
             if(comments[i].postId != a.target.parentElement.parentElement.firstElementChild.value) {
-                commentsUpdated.push(comments[i]);2
-                console.log(comments[i])
+                commentsUpdated.push(comments[i]);
                 localStorage.comments = JSON.stringify(commentsUpdated);
-                console.log(commentsUpdated)
             } 
             // else {
-            //     console.log(commentsUpdated)
-            // }
+            //     localStorage.comments = JSON.stringify(commentsUpdated)
+            //     // console.log('delete hiih nohtsol biylsengui. Reason:  ');
+            //     // console.log(comments[i].postId , '===' ,  a.target.parentElement.parentElement.firstElementChild.value)
+            // } 
         }
-
-        for(var i = 0; i < posts.length; i++) {
-            let postIdInputs = document.getElementsByClassName('postId');
-            postIdInputs = [...postIdInputs]
-
-            postIdInputs[i].value = i;
-            posts[i].id = i ;
-        }
-        
-        localStorage.posts = JSON.stringify(posts);
     }
 }
 
