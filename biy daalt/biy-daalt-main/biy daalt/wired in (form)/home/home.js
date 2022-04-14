@@ -134,6 +134,7 @@ function addPost() {
         newPostText.id = 'new-post-text';
         newPostText.innerText = newPostInput.value;
 
+<<<<<<< HEAD
         posts.push({post: newPostInput.value,   id: postIdNote + 1,   userId: whoLoggedIn.id });
         localStorage.posts = JSON.stringify(posts)
         postIdNote = postIdNote + 1;
@@ -142,6 +143,15 @@ function addPost() {
         //     localStorage.posts = JSON.stringify([{post: newPostInput.value, id: postIdNote, userId: whoLoggedIn.id }])
         // } else {
         // }
+=======
+        if(localStorage.posts == undefined) {
+            localStorage.posts = JSON.stringify([{post: newPostInput.value, id: 0, userId: whoLoggedIn.id }])
+        } else {
+            // let posts = JSON.parse(localStorage.posts);
+            posts.push({post: newPostInput.value,   id: JSON.parse(localStorage.posts).length,   userId: whoLoggedIn.id });
+            localStorage.posts = JSON.stringify(posts)
+        }
+>>>>>>> test
 
         let circleEllips = document.createElement('i');
         circleEllips.className = 'fa-regular fa-trash-can';
@@ -279,6 +289,7 @@ function newPostCanceled() {
 function deletePost(a) {
     if(a.target.id === 'trashCan') {
         a.target.parentElement.parentElement.remove();
+<<<<<<< HEAD
         let posts = JSON.parse(localStorage.posts)
         let postsUpdate = [];
 
@@ -301,18 +312,67 @@ function deletePost(a) {
 
         let comments = JSON.parse(localStorage.comments);
         let commentsUpdated = [];
+=======
+        let postsUpdate;
+        if(localStorage.posts != undefined) {
+            postsUpdate = []
+        }
+
+        posts.forEach (
+            function(el) {
+                // if(el.id == a.target.parentElement.parentElement.firstElementChild.value ) {
+                //     posts.splice(a.target.parentElement.parentElement.firstElementChild.value , 1);
+                //     console.log('tentsuuu baina')
+                // };
+
+                if(el.id != a.target.parentElement.parentElement.firstElementChild.value ) {
+                    console.log('устгах ёсгүй пост олдоод push хиив')
+                    postsUpdate.push(el)
+                }
+            }
+        );
+        // let comments;
+        if(localStorage.comments != undefined) {
+            comments = JSON.parse(localStorage.comments);
+        } else {
+            localStorage.comments = JSON.stringify([])
+        }
+>>>>>>> test
 
         for(var i = 0; i < comments.length; i++) {
-            if(comments[i].postId != a.target.parentElement.parentElement.firstElementChild.value) {
-                commentsUpdated.push(comments[i]);
-                localStorage.comments = JSON.stringify(commentsUpdated);
+            if(comments[i].postId == a.target.parentElement.parentElement.firstElementChild.value) {
+                // commentsUpdated.push(comments[i]);
+                // localStorage.comments = JSON.stringify(commentsUpdated);
+                // console.log('nohtsol biylej baina')
+                console.log('before:  ' , comments)
+                comments.splice(i , 1)
+                console.log('after:  ' , comments)
+                localStorage.comments = JSON.stringify(comments);
             } 
+<<<<<<< HEAD
             // else {
             //     localStorage.comments = JSON.stringify(commentsUpdated)
             //     // console.log('delete hiih nohtsol biylsengui. Reason:  ');
             //     // console.log(comments[i].postId , '===' ,  a.target.parentElement.parentElement.firstElementChild.value)
             // } 
         }
+=======
+            else {
+                console.log('nohtsol biylehgui baina')
+            }
+        }
+
+        // for(var i = 0; i < posts.length; i++) {
+        //     let postIdInputs = document.getElementsByClassName('postId');
+        //     postIdInputs = [...postIdInputs]
+
+        //     // postIdInputs[i].value = i;
+        //     // posts[i].id = i ;
+        // }
+        
+        // localStorage.posts = JSON.stringify(posts);
+        localStorage.posts = JSON.stringify(postsUpdate);
+>>>>>>> test
     }
 }
 
