@@ -32,6 +32,7 @@ newPostInput.addEventListener('keyup', (event)=> {
 
 
 function postSync() {
+    newPostParent.innerHTML = ""
     if(localStorage.posts != undefined || localStorage.posts == '[]') {
         posts.forEach(function(el) {
             let newPost = document.createElement('div');
