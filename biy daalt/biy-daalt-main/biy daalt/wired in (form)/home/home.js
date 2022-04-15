@@ -9,6 +9,13 @@ let comments;
 let posts;
 let commentsUpdated = [];
 
+
+if(localStorage.comments != undefined || localStorage.comments === '[]') {
+    comments = JSON.parse(localStorage.comments)
+} else {
+    comments = []
+}
+
 if(localStorage.posts != undefined || localStorage.posts === '[]') {
     posts = JSON.parse(localStorage.posts)
 } else  {
@@ -300,7 +307,6 @@ function deletePost(a) {
         localStorage.posts = JSON.stringify(postsUpdate);
         console.log(postsUpdate)
 
-        let comments = JSON.parse(localStorage.comments);
 
         for(var i = 0; i < comments.length; i++) {
             if(comments[i].postId != a.target.parentElement.parentElement.firstElementChild.value) {
