@@ -143,7 +143,10 @@ function addPost() {
         newPostText.id = 'new-post-text';
         newPostText.innerText = newPostInput.value;
 
-        posts.push({post: newPostInput.value,   id: postIdNote + 1,   userId: whoLoggedIn.id });
+        id = Math.random()
+
+        // posts.push({post: newPostInput.value,   id: postIdNote + 1,   userId: whoLoggedIn.id });
+        posts.push({post: newPostInput.value,   id: id,   userId: whoLoggedIn.id });
         localStorage.posts = JSON.stringify(posts)
         postIdNote = postIdNote + 1;
 
@@ -158,7 +161,9 @@ function addPost() {
         
         let postId = document.createElement('input');
         postId.className = "postId";
-        postId.value = postIdNote;
+        postId.value = id;
+
+        id = '';
 
         let divider = document.createElement('div');
         divider.className = 'divider';

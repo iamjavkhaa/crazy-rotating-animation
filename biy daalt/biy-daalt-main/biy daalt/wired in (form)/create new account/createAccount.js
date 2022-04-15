@@ -11,6 +11,7 @@ const capital = /[A-Z]/;
 const lower = /[a-z]/;
 const especial = /[^a-zA-z0-9 ]/;
 let user;
+let id;
 
 if(localStorage.users != undefined) {
     user = JSON.parse(localStorage.users)
@@ -225,10 +226,13 @@ function zail() {
         && (sevenp.style.color === 'blue')
         && (eightp.style.color === 'blue')    
     ) {
-        user.push({lastname: lname, firstname: fname, phone: number, email: email, password: pass, id: user.length});
+        id = Math.random()
+        // user.push({lastname: lname, firstname: fname, phone: number, email: email, password: pass, id: user.length});
+        user.push({lastname: lname, firstname: fname, phone: number, email: email, password: pass, id: id});
         localStorage.users = JSON.stringify(user)
-        localStorage.whoLoggedIn = JSON.stringify({lastname: lname, firstname: fname, phone: number, email: email, password: pass, id: user.length - 1});
+        localStorage.whoLoggedIn = JSON.stringify({lastname: lname, firstname: fname, phone: number, email: email, password: pass, id: id});
         console.log(user);
+        id = ''
         lname = "";
         fname = "";
         number = '';
