@@ -44,6 +44,33 @@ form {
     color: #10ff00;
     text-shadow: 5px 3px 5px white;
 }
+
+@media screen and (max-width: 449px ) {
+    form {
+        width: 250px;
+    }
+    #login {
+        width: 210px;
+    }
+    .javebook {
+        font-size: 45px;
+    }
+    .body-in {
+        padding: 0;
+    }
+}
+
+@media screen  and (max-width: 1000px) {
+    .body-in {
+        flex-direction: column;
+        justify-content:center;
+    }
+    .javebook {
+        margin-bottom: 80px;
+    }
+}
+
+
 input {
     width: 100%;
     height: 50px;

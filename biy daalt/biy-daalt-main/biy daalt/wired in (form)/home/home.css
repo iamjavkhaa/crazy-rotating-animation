@@ -36,31 +36,99 @@
 }
 body {
     width: 100%;
+    height: fit-content;
     background-image: linear-gradient(to right top, #e100ff, #f0e0e0, #00ff45);
 }
 .body-in {
     width: 100%;
     min-height: 100vh;
-    /* height: 100vh; */
-    /* display: grid;  */
-    /* grid-template-columns: 30% 40% 30%;*/
     display: flex; 
     justify-content: space-between;
+    position: relative;
 }
 .left {
-    /* background-color: cyan; */
     padding: 30px;
-    width: 20%;
+    /* width: 20%; */
+    position: fixed;
 }
 .main {
-    /* background-color: yellow; */
-    width: 36%;
+    /* width: 36%; */
+    margin: auto;
 }
 .right {
-    /* background-color: pink; */
-    width: 20%;
+    /* width: 20%; */
+    position: fixed;
+    right: 0;
+    padding: 30px;
 }
-@media screen and (max-width: 1400px) {
+
+@media screen and (max-width: 649px) {
+    .left {
+        left: 0;
+        right: 0;
+        position: absolute;
+    }
+    .main {
+        margin-top: 500px;
+        width: 100%;
+    }
+    .right {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 200px;
+    }
+}
+
+
+@media screen and (min-width: 650px) and (max-width: 749px) {
+    .left {
+        padding: 30px;
+        width: 50%;
+        top: 0;
+        position: absolute;
+    }
+    .create-new-post {
+        height: 204px;
+    }
+    .main {
+        width: 87%;
+        margin-top: 300px;
+    }
+    .right {
+        width: 50%;
+        position: absolute;
+        right: 0;
+        padding: 30px;
+    }
+    
+}
+
+
+
+@media screen and (min-width: 750px) and (max-width: 929px) {
+    .body-in  {
+        justify-content: flex-end;
+    }
+    .left {
+        width: 40%;
+        position: fixed;
+        left: 0;
+    }
+    .main {
+        width: 60%;
+        margin-left: auto;
+        margin-right: 0;
+    }
+    .right {
+        width: 40%;
+        position: fixed;
+        top: 250px;
+        left: 0;
+    }
+}
+
+@media screen and (min-width: 930px) and (max-width: 1400px) {
     .left {
         width: 30%;
     }
@@ -81,6 +149,7 @@ body {
     font-size: 1.5rem ;
     padding: 15px;
     border-radius: 10px;
+    z-index: 1;
     /* box-shadow: 0 12px 28px 0 var(--shadow-2),0 2px 4px 0 var(--shadow-1),inset 0 0 0 1px var(--shadow-inset); */
     /* box-shadow: 0 0 7px 4px rgb(2 0 0 / 17%); */
     /* box-shadow: 0 0 179px 429px black; */
@@ -99,7 +168,7 @@ body {
 }
 #new-post-btn {
     width: 70%;
-    height: 29px;
+    height: 35px;
     border-radius: 20px;
     border: none;
     transition: .2s;
@@ -256,4 +325,100 @@ body {
     font-family: 'Readex Pro', sans-serif;
     font-family: 'Roboto', sans-serif;
 }
+
+/* ----------------------------------  right  START --------------------------------  */
+
+.log-out-parent {
+    width: 100%;
+    display: flex;
+    position: relative;
+    justify-content: center ;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.fa-spinner {
+    display: none;
+    font-size: 3rem;
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    animation: load 1s linear infinite;
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    position: relative;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.avatar:hover {
+    cursor: pointer;
+    animation: shake .4s ease 1;
+}
+
+.user-name {
+    word-spacing: 8px;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.log-out-button {
+    width: 130px;
+    height: 40px;
+    border-radius: 30px;
+    border: none;
+    /* background-color: var(--btnPink); */
+    background-color: rgb(255, 0, 0);
+    color: white;
+    transition: .2s;
+    margin-top: 10px;
+}
+.log-out-button:hover {
+    cursor: pointer;
+    background-color: var(--green);
+    background-color: rgb(255, 55, 55);
+}
+
+
+
+/*  -------------  profile zurag songoh start  ------------------ */
+
+@keyframes shake {
+    0% {
+        /* transform: rotate(1); */
+    }
+    20% {
+        transform: rotate(-10deg);
+        box-shadow: 0px 0px 14px 1px grey;
+    }
+    40% {
+        transform: rotate(10deg);
+    }
+    60% {
+        transform: rotate(-10deg);
+    }
+    80% {
+        transform: rotate(10deg);
+    }
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+@keyframes load {
+    from {
+
+    }
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+/*  -------------  profile zurag songoh end  ------------------ */
 

@@ -8,6 +8,12 @@ const newPostInput = document.querySelector('#new-post-input');
 let comments;
 let posts;
 let commentsUpdated = [];
+let userName = document.querySelector('.user-name')
+
+
+
+
+
 
 
 if(localStorage.comments != undefined || localStorage.comments === '[]') {
@@ -54,7 +60,11 @@ function postSync() {
             let circleEllips = document.createElement('i');
             circleEllips.className = 'fa-regular fa-trash-can';
             circleEllips.id = 'trashCan';
-            whoPosted.appendChild(circleEllips);
+            
+            if(el.userId == whoLoggedIn.id) {
+                whoPosted.appendChild(circleEllips);
+            }
+
     
 
             let postId = document.createElement('input');
@@ -128,6 +138,10 @@ newPostInput.addEventListener('keyup', function(event) {
         addPost();
     }
 })
+
+
+
+
 
 // Array.prototype.breakableForEach()
 
@@ -383,6 +397,67 @@ document.addEventListener('click', (event) => {
     }
 });
 
+
+function logOut() {
+    localStorage.removeItem('whoLoggedIn')
+    location.href = '../index/index.html'
+}
+
+
+
+// ------------------  profile zurag songoh  start  -----------
+
+const img = document.querySelector('#img');
+const avatar = document.querySelector('#avatar')
+const load = document.querySelector('.fa-spinner')
+
+
+
+function zurag() {
+    const image = img.files[0];
+    avatar.src = URL.createObjectURL(image);
+    avatar.style.visibility = 'visible'
+    load.style.display = 'none';
+
+    whoLoggedIn.avatar = URL.createObjectURL(image);
+    let users = JSON.parse(localStorage.users)
+    let usersUpdate = []
+
+    for(let i = 0; i < users.length ; i++) {
+        if(users[i].id === whoLoggedIn.id) {
+            alert('user oldloo')
+            usersUpdate.push(whoLoggedIn)
+        } else {
+            usersUpdate.push(users[i])
+        }
+    }
+
+    console.log(usersUpdate)
+    localStorage.users = JSON.stringify(usersUpdate)
+
+}
+
+function avatarSync() {
+    if(whoLoggedIn.avatar != undefined) {
+        // avatar.src = whoLoggedIn.avatar;
+        // avatar.src = 'blob:http://127.0.0.1:5500/83873f09-eeef-4995-b09d-7d0062b63ec6'
+    }
+
+}
+avatarSync();
+
+img.addEventListener('change', function() {
+    avatar.style.visibility = 'hidden'
+    load.style.display = 'block';
+    setTimeout(zurag, 3000)
+})
+
+// ------------------  profile zurag songoh  end  -----------
+
+
+
+userName.innerText = whoLoggedIn.lastname + ' ' + ' ' + whoLoggedIn.firstname
+document.querySelector(".log-out-button").addEventListener('click', logOut);
 document.addEventListener('click', deletePost);
 
 
