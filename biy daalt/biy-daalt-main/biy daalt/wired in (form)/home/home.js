@@ -460,7 +460,7 @@ userName.innerText = whoLoggedIn.lastname + ' ' + ' ' + whoLoggedIn.firstname
 document.querySelector(".log-out-button").addEventListener('click', logOut);
 document.addEventListener('click', deletePost);
 
-
+7
 // let posts = [];
 // let post = {post: 'post 1'};
 // post.next = {comment: 'comment 1'}
@@ -511,7 +511,6 @@ document.addEventListener('click', deletePost);
 // url + ? + params=value
 
 
-
 // fetch("https://jsonplaceholder.typicode.com/users")
 //     .then(function(response){
 //         return response.json()
@@ -519,6 +518,7 @@ document.addEventListener('click', deletePost);
 //     .then(function(result){
 //         console.log(result)
 //         let usersData = result;
+//         // console.log(usersData)
 //         result.forEach((user)=>{
 //             document.body.insertAdjacentHTML('afterbegin', `
 //                 <h1 id="userName-${user.id}">${user.name}</h1>
@@ -530,7 +530,7 @@ document.addEventListener('click', deletePost);
 //     console.log(event.target)
 // }
 
-// <input 333333=id hidden />  ---------------> ene argaar gardh irsen post deeree local storage deerees songoj ustgah id g ogch bolno
+//  <input 333333=id hidden />  //  ---------------> ene argaar gardh irsen post deeree local storage deerees songoj ustgah id g ogch bolno */}
 
 // document.addEventListener('click', (a)=>{
 //     if(a.target.id.split('-')[0] === 'userName') {
