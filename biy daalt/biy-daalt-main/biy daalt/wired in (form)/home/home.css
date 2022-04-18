@@ -143,6 +143,14 @@ body {
     }
 }
 
+@media screen and (min-width: 1401px) {
+    .main {
+        margin: 0 auto;
+        width: 60%;
+        max-width: 650px;
+    }
+}
+
 .create-new-post {
     background-color: white;
     display: flex;
